@@ -4,8 +4,8 @@ const path = require('path');
 const readline = require('readline');
 
 const rl = readline.createInterface({
-input: process.stdin,
-output: process.stdout
+    input: process.stdin,
+    output: process.stdout
 });
 
 const RESET = '\x1b[0m';
@@ -17,51 +17,65 @@ const DIM = '\x1b[2m';
 const BOLD = '\x1b[1m';
 
 const success = (message) => {
-console.log( ${GREEN}✓${RESET} ${message});
+    console.log(` ${GREEN}✓${RESET} ${message}`);
 };
 
 const warning = (message) => {
-console.log( ${YELLOW}⚠${RESET} ${message});
+    console.log(` ${YELLOW}⚠${RESET} ${message}`);
 };
 
 const error = (message) => {
-console.log( ${RED}✕${RESET} ${message});
+    console.log(` ${RED}✕${RESET} ${message}`);
 };
 
 const info = (message) => {
-console.log( ${CYAN}›${RESET} ${message});
+    console.log(` ${CYAN}›${RESET} ${message}`);
 };
 
 console.log('');
-console.log( ${CYAN}${BOLD}W R I G H T${RESET});
-console.log( ${DIM}Tailwind Web Project Structure Generator${RESET});
-console.log( ${DIM}Powered by Fouad Salehi${RESET});
+console.log(` ${CYAN}${BOLD}W R I G H T${RESET}`);
+console.log(` ${DIM}Tailwind Web Project Structure Generator${RESET}`);
+console.log(` ${DIM}Powered by Fouad Salehi${RESET}`);
 console.log('');
 
-rl.question( ${CYAN}›${RESET} Project name:, (projectName) => {
-rl.close();
+rl.question(` ${CYAN}›${RESET} Project name: `, (projectName) => {
+    const trimmedProjectName = projectName.trim();
 
-const trimmedProjectName = projectName.trim();
+    if (!trimmedProjectName) {
+        console.log('');
+        error('Project name cannot be empty.');
+        console.log('');
+        rl.close();
+        return;
+    }
 
-if (!trimmedProjectName) {
-    console.log('');
-    error('Project name cannot be empty.');
-    console.log('');
-    return;
-}
+    if (trimmedProjectName.includes('/') || trimmedProjectName.includes('\\')) {
+        console.log('');
+        error('Project name cannot contain "/" or "\\".');
+        console.log('');
+        rl.close();
+        return;
+    }
 
-if (trimmedProjectName.includes('/') || trimmedProjectName.includes('\\')) {
-    console.log('');
-    error('Project name cannot contain "/" or "\\".');
-    console.log('');
-    return;
-}
+    rl.question(` ${CYAN}›${RESET} Tailwind version? (v3 / v4): `, (versionAnswer) => {
+        rl.close();
 
-const WRIGHT = path.join(__dirname, trimmedProjectName);
+        const twVersion = versionAnswer.trim().toLowerCase();
 
-const indexFile = path.join(WRIGHT, 'index.html');
+        if (twVersion !== 'v3' && twVersion !== 'v4') {
+            console.log('');
+            error('Please choose either "v3" or "v4".');
+            console.log('');
+            return;
+        }
 
-const indexFileContent = `<!DOCTYPE html>
+        const isV4 = twVersion === 'v4';
+
+        const WRIGHT = path.join(__dirname, trimmedProjectName);
+
+        const indexFile = path.join(WRIGHT, 'index.html');
+
+        const indexFileContent = `<!DOCTYPE html>
 
 <html lang="en"> <head> <title>${trimmedProjectName} | Powered by WRIGHT</title>
 
@@ -71,7 +85,7 @@ const indexFileContent = `<!DOCTYPE html>
     <meta name="author" content="Fouad Salehi">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="${isV4 ? 'https://cdn.tailwindcss.com/4' : 'https://cdn.tailwindcss.com'}"></script>
 
     <link rel="stylesheet" href="dashboard/assets/css/stylesheet.css" type="text/css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -96,9 +110,9 @@ const indexFileContent = `<!DOCTYPE html>
 
 </html>`;
 
-const READMEFile = path.join(WRIGHT, 'README.txt');
+        const READMEFile = path.join(WRIGHT, 'README.txt');
 
-const READMEFileContent = `# ${trimmedProjectName}
+        const READMEFileContent = `# ${trimmedProjectName}
 
 Powered by WRIGHT for Tailwind
 
@@ -220,20 +234,24 @@ This project is proprietary software.
 For the complete license terms, see the LICENSE file.
 `;
 
-const faviconURL = 'https://hellstate.web.app/favicon.ico';
-const favicon = path.join(WRIGHT, 'favicon.ico');
+        const faviconURL = 'https://hellstate.web.app/favicon.ico';
+        const favicon = path.join(WRIGHT, 'favicon.ico');
 
-const dashboardFolder = path.join(WRIGHT, 'dashboard');
-const assetsFolder = path.join(dashboardFolder, 'assets');
+        const dashboardFolder = path.join(WRIGHT, 'dashboard');
+        const assetsFolder = path.join(dashboardFolder, 'assets');
 
-const cssFolder = path.join(assetsFolder, 'css');
-const jsFolder = path.join(assetsFolder, 'js');
-const imagesFolder = path.join(assetsFolder, 'images');
-const fontsFolder = path.join(assetsFolder, 'fonts');
+        const cssFolder = path.join(assetsFolder, 'css');
+        const jsFolder = path.join(assetsFolder, 'js');
+        const imagesFolder = path.join(assetsFolder, 'images');
+        const fontsFolder = path.join(assetsFolder, 'fonts');
 
-const stylesheetFile = path.join(cssFolder, 'stylesheet.css');
+        const stylesheetFile = path.join(cssFolder, 'stylesheet.css');
 
-const stylesheetFileContent = `@charset "UTF-8";
+        const tailwindDirective = isV4
+            ? `@import "tailwindcss";\n\n`
+            : `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n`;
+
+        const stylesheetFileContent = `${tailwindDirective}@charset "UTF-8";
 
 {
 --background: #ffffff;
@@ -273,120 +291,121 @@ color: var(--muted);
 line-height: 1.6;
 }`;
 
-const appFile = path.join(jsFolder, 'app.js');
-const appFileContent = '';
+        const appFile = path.join(jsFolder, 'app.js');
+        const appFileContent = '';
 
-console.log('');
+        console.log('');
 
-if (!fs.existsSync(WRIGHT)) {
-    fs.mkdirSync(WRIGHT);
-    success(`${trimmedProjectName} directory created.`);
+        if (!fs.existsSync(WRIGHT)) {
+            fs.mkdirSync(WRIGHT);
+            success(`${trimmedProjectName} directory created.`);
 
-    if (!fs.existsSync(dashboardFolder)) {
-        fs.mkdirSync(dashboardFolder);
-        success('Dashboard directory created.');
+            if (!fs.existsSync(dashboardFolder)) {
+                fs.mkdirSync(dashboardFolder);
+                success('Dashboard directory created.');
 
-        if (!fs.existsSync(assetsFolder)) {
-            fs.mkdirSync(assetsFolder);
-            success('Assets directory created.');
+                if (!fs.existsSync(assetsFolder)) {
+                    fs.mkdirSync(assetsFolder);
+                    success('Assets directory created.');
 
-            if (!fs.existsSync(cssFolder)) {
-                fs.mkdirSync(cssFolder);
+                    if (!fs.existsSync(cssFolder)) {
+                        fs.mkdirSync(cssFolder);
 
-                fs.writeFile(stylesheetFile, stylesheetFileContent, (err) => {
-                    if (err) {
-                        error(`Stylesheet.css could not be created: ${err.message}`);
+                        fs.writeFile(stylesheetFile, stylesheetFileContent, (err) => {
+                            if (err) {
+                                error(`Stylesheet.css could not be created: ${err.message}`);
+                            } else {
+                                success('stylesheet.css created.');
+                            }
+                        });
                     } else {
-                        success('stylesheet.css created.');
+                        warning('CSS directory already exists.');
                     }
-                });
-            } else {
-                warning('CSS directory already exists.');
-            }
 
-            if (!fs.existsSync(jsFolder)) {
-                fs.mkdirSync(jsFolder);
+                    if (!fs.existsSync(jsFolder)) {
+                        fs.mkdirSync(jsFolder);
 
-                fs.writeFile(appFile, appFileContent, (err) => {
-                    if (err) {
-                        error(`App.js could not be created: ${err.message}`);
+                        fs.writeFile(appFile, appFileContent, (err) => {
+                            if (err) {
+                                error(`App.js could not be created: ${err.message}`);
+                            } else {
+                                success('app.js created.');
+                            }
+                        });
                     } else {
-                        success('app.js created.');
+                        warning('JS directory already exists.');
                     }
+
+                    if (!fs.existsSync(imagesFolder)) {
+                        fs.mkdirSync(imagesFolder);
+                        success('Images directory created.');
+                    } else {
+                        warning('Images directory already exists.');
+                    }
+
+                    if (!fs.existsSync(fontsFolder)) {
+                        fs.mkdirSync(fontsFolder);
+                        success('Fonts directory created.');
+                    } else {
+                        warning('Fonts directory already exists.');
+                    }
+                } else {
+                    warning('Assets directory already exists.');
+                }
+            } else {
+                warning('Dashboard directory already exists.');
+            }
+
+            fs.writeFile(indexFile, indexFileContent, (err) => {
+                if (err) {
+                    error(`index.html could not be created: ${err.message}`);
+                } else {
+                    success('index.html created.');
+                }
+            });
+
+            https.get(faviconURL, (response) => {
+                if (response.statusCode !== 200) {
+                    warning(`Favicon download failed (HTTP ${response.statusCode}).`);
+                    response.resume();
+                    return;
+                }
+
+                const faviconStream = fs.createWriteStream(favicon);
+
+                response.pipe(faviconStream);
+
+                faviconStream.on('finish', () => {
+                    faviconStream.close();
+                    success('Favicon downloaded.');
                 });
-            } else {
-                warning('JS directory already exists.');
-            }
 
-            if (!fs.existsSync(imagesFolder)) {
-                fs.mkdirSync(imagesFolder);
-                success('Images directory created.');
-            } else {
-                warning('Images directory already exists.');
-            }
+                faviconStream.on('error', (err) => {
+                    error(`Favicon could not be saved: ${err.message}`);
+                });
+            }).on('error', (err) => {
+                warning(`Favicon could not be downloaded: ${err.message}`);
+                info('The project was created successfully without the favicon.');
+            });
 
-            if (!fs.existsSync(fontsFolder)) {
-                fs.mkdirSync(fontsFolder);
-                success('Fonts directory created.');
-            } else {
-                warning('Fonts directory already exists.');
-            }
+            fs.writeFile(READMEFile, READMEFileContent, (err) => {
+                if (err) {
+                    error(`README.txt could not be created: ${err.message}`);
+                } else {
+                    success('README.txt created.');
+                }
+            });
+
+            console.log('');
+            console.log(`  ${GREEN}${BOLD}${trimmedProjectName} project created successfully!${RESET}`);
+            console.log(`  ${DIM}Tailwind:${RESET} ${twVersion}`);
+            console.log('');
+            console.log(`  ${DIM}Location:${RESET} ${path.relative(process.cwd(), WRIGHT)}`);
+            console.log('');
         } else {
-            warning('Assets directory already exists.');
-        }
-    } else {
-        warning('Dashboard directory already exists.');
-    }
-
-    fs.writeFile(indexFile, indexFileContent, (err) => {
-        if (err) {
-            error(`index.html could not be created: ${err.message}`);
-        } else {
-            success('index.html created.');
+            warning(`A ${trimmedProjectName} directory already exists.`);
+            info('Please remove or rename the existing directory and try again.');
+            console.log('');
         }
     });
-
-    https.get(faviconURL, (response) => {
-        if (response.statusCode !== 200) {
-            warning(`Favicon download failed (HTTP ${response.statusCode}).`);
-            response.resume();
-            return;
-        }
-
-        const faviconStream = fs.createWriteStream(favicon);
-
-        response.pipe(faviconStream);
-
-        faviconStream.on('finish', () => {
-            faviconStream.close();
-            success('Favicon downloaded.');
-        });
-
-        faviconStream.on('error', (err) => {
-            error(`Favicon could not be saved: ${err.message}`);
-        });
-    }).on('error', (err) => {
-        warning(`Favicon could not be downloaded: ${err.message}`);
-        info('The project was created successfully without the favicon.');
-    });
-
-    fs.writeFile(READMEFile, READMEFileContent, (err) => {
-        if (err) {
-            error(`README.txt could not be created: ${err.message}`);
-        } else {
-            success('README.txt created.');
-        }
-    });
-
-    console.log('');
-    console.log(`  ${GREEN}${BOLD}${trimmedProjectName} project created successfully!${RESET}`);
-    console.log('');
-    console.log(`  ${DIM}Location:${RESET} ${path.relative(process.cwd(), WRIGHT)}`);
-    console.log('');
-} else {
-    warning(`A ${trimmedProjectName} directory already exists.`);
-    info('Please remove or rename the existing directory and try again.');
-    console.log('');
-}
-
 });
