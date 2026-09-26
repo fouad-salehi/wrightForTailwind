@@ -17,28 +17,28 @@ const DIM = '\x1b[2m';
 const BOLD = '\x1b[1m';
 
 const success = (message) => {
-    console.log(` ${GREEN}✓${RESET} ${message}`);
+    console.log(`  ${GREEN}✓${RESET} ${message}`);
 };
 
 const warning = (message) => {
-    console.log(` ${YELLOW}⚠${RESET} ${message}`);
+    console.log(`  ${YELLOW}⚠${RESET} ${message}`);
 };
 
 const error = (message) => {
-    console.log(` ${RED}✕${RESET} ${message}`);
+    console.log(`  ${RED}✕${RESET} ${message}`);
 };
 
 const info = (message) => {
-    console.log(` ${CYAN}›${RESET} ${message}`);
+    console.log(`  ${CYAN}›${RESET} ${message}`);
 };
 
 console.log('');
-console.log(` ${CYAN}${BOLD}W R I G H T${RESET}`);
-console.log(` ${DIM}Tailwind Web Project Structure Generator${RESET}`);
-console.log(` ${DIM}Powered by Fouad Salehi${RESET}`);
+console.log(`  ${CYAN}${BOLD}W R I G H T${RESET}`);
+console.log(`  ${DIM}Web Project Structure Generator${RESET}`);
+console.log(`  ${DIM}Powered by Fouad Salehi${RESET}`);
 console.log('');
 
-rl.question(` ${CYAN}›${RESET} Project name: `, (projectName) => {
+rl.question(`  ${CYAN}›${RESET} Project name: `, (projectName) => {
     const trimmedProjectName = projectName.trim();
 
     if (!trimmedProjectName) {
@@ -57,7 +57,7 @@ rl.question(` ${CYAN}›${RESET} Project name: `, (projectName) => {
         return;
     }
 
-    rl.question(` ${CYAN}›${RESET} Tailwind version? (v3 / v4): `, (versionAnswer) => {
+    rl.question(`  ${CYAN}›${RESET} Tailwind version? (v3 / v4): `, (versionAnswer) => {
         rl.close();
 
         const twVersion = versionAnswer.trim().toLowerCase();
@@ -76,112 +76,114 @@ rl.question(` ${CYAN}›${RESET} Project name: `, (projectName) => {
         const indexFile = path.join(WRIGHT, 'index.html');
 
         const indexFileContent = `<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>${trimmedProjectName} | Powered by WRIGHT</title>
 
-<html lang="en"> <head> <title>${trimmedProjectName} | Powered by WRIGHT</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="Fouad Salehi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="Fouad Salehi">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="${isV4 ? 'https://cdn.tailwindcss.com/4' : 'https://cdn.tailwindcss.com'}"></script>
 
-    <script src="${isV4 ? 'https://cdn.tailwindcss.com/4' : 'https://cdn.tailwindcss.com'}"></script>
+        <link rel="stylesheet" href="dashboard/assets/css/stylesheet.css" type="text/css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="favicon.ico" type="image/x-icon">
+    </head>
 
-    <link rel="stylesheet" href="dashboard/assets/css/stylesheet.css" type="text/css">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="favicon.ico" type="image/x-icon">
-</head>
+    <body>
+        <header></header>
 
-<body>
-    <header></header>
+        <main>
+            <article>
+                <h1>${trimmedProjectName}</h1>
+            </article>
 
-    <main>
-        <article>
-            <h1>${trimmedProjectName}</h1>
-        </article>
+            <aside></aside>
+        </main>
 
-        <aside></aside>
-    </main>
+        <footer></footer>
 
-    <footer></footer>
-
-    <script src="dashboard/assets/js/app.js" type="text/javascript"></script>
-</body>
-
+        <script src="dashboard/assets/js/app.js" type="text/javascript"></script>
+    </body>
 </html>`;
 
         const READMEFile = path.join(WRIGHT, 'README.txt');
 
         const READMEFileContent = `# ${trimmedProjectName}
 
-Powered by WRIGHT for Tailwind
+**Powered by WRIGHT for Tailwind**
 
 This project was created using WRIGHT for Tailwind, a simple and practical project structure generator designed for web developers and designers.
 
 It provides a clean and organized foundation for Tailwind CSS-based web projects, helping developers spend less time creating folders and files manually and more time focusing on development.
 
-Features
-Clean and organized project structure
-Ready-to-use HTML entry file
-Tailwind CSS included through CDN
-Separate folders for CSS, JavaScript, images, and fonts
-Basic stylesheet included
-JavaScript entry file included
-Favicon support
-Project README included automatically
-Suitable for HTML, CSS, JavaScript, PHP, Tailwind CSS, and related libraries and frameworks
-Project Structure
+## Features
+
+* Clean and organized project structure
+* Ready-to-use HTML entry file
+* Tailwind CSS ${twVersion} included through CDN
+* Separate folders for CSS, JavaScript, images, and fonts
+* Basic stylesheet included
+* JavaScript entry file included
+* Favicon support
+* Project README included automatically
+* Suitable for HTML, CSS, JavaScript, PHP, Tailwind CSS, and related libraries and frameworks
+
+## Project Structure
 
 ${trimmedProjectName}/
 ├── dashboard/
-│ └── assets/
-│ ├── css/
-│ │ └── stylesheet.css
-│ ├── js/
-│ │ └── app.js
-│ ├── images/
-│ └── fonts/
+│   └── assets/
+│       ├── css/
+│       │   └── stylesheet.css
+│       ├── js/
+│       │   └── app.js
+│       ├── images/
+│       └── fonts/
 ├── index.html
 ├── favicon.ico
 └── README.txt
 
-Getting Started
+## Getting Started
 
 This project provides the initial structure required for a Tailwind CSS-based web project.
 
 You can start developing directly inside the generated project directory and modify the structure according to your needs.
 
-CSS
+### CSS
 
 Place stylesheets and CSS-related resources inside:
 
 dashboard/assets/css/
 
-JavaScript
+### JavaScript
 
 Place JavaScript files and related resources inside:
 
 dashboard/assets/js/
 
-Images
+### Images
 
 Place project images, icons, and other visual assets inside:
 
 dashboard/assets/images/
 
-Fonts
+### Fonts
 
 Place custom fonts and font-related resources inside:
 
 dashboard/assets/fonts/
 
-Tailwind CSS
+## Tailwind CSS
 
-Tailwind CSS is included through the Tailwind CDN and loaded automatically in index.html.
+Tailwind CSS ${twVersion} is included through the Tailwind CDN and loaded automatically in index.html.
 
 You can start using Tailwind utility classes directly in your HTML.
 
-Libraries & Frameworks
+## Libraries & Frameworks
 
 If your project uses additional libraries or frameworks, you can create an additional folder inside the appropriate technology directory.
 
@@ -199,27 +201,28 @@ dashboard/assets/css/
 
 This keeps third-party resources separated from your own project files and helps maintain a clean structure.
 
-Philosophy
+## Philosophy
 
 WRIGHT is built around a simple idea:
 
-Create the structure once. Focus on building.
+**Create the structure once. Focus on building.**
 
 A well-organized project structure makes development easier, improves maintainability, and helps prevent unnecessary confusion as a project grows.
 
-Compatibility
+## Compatibility
 
 WRIGHT for Tailwind can be used as a starting point for projects involving technologies such as:
 
-HTML
-CSS
-JavaScript
-PHP
-Tailwind CSS
-Front-end libraries
-JavaScript frameworks
-Other web development tools
-Notes
+* HTML
+* CSS
+* JavaScript
+* PHP
+* Tailwind CSS
+* Front-end libraries
+* JavaScript frameworks
+* Other web development tools
+
+## Notes
 
 WRIGHT generates a starting structure rather than a complete application.
 
@@ -227,12 +230,13 @@ You are free to modify, remove, rename, or extend any generated file or director
 
 For larger projects, additional directories can be added as the project grows.
 
-License
+## License
 
 This project is proprietary software.
 
-For the complete license terms, see the LICENSE file.
-`;
+For the complete license terms, see the LICENSE file in the WRIGHT project repository:
+
+https://github.com/fouad-salehi/wright`;
 
         const faviconURL = 'https://hellstate.web.app/favicon.ico';
         const favicon = path.join(WRIGHT, 'favicon.ico');
@@ -253,42 +257,44 @@ For the complete license terms, see the LICENSE file.
 
         const stylesheetFileContent = `${tailwindDirective}@charset "UTF-8";
 
-{
---background: #ffffff;
---foreground: #111111;
---muted: #666666;
+:root {
+    --background: #ffffff;
+    --foreground: #111111;
+    --muted: #666666;
 }
 
-{
-margin: 0;
-border: 0;
-padding: 0;
-box-sizing: border-box;
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-min-height: 100vh;
-padding: 24px;
-background: var(--background);
-color: var(--foreground);
-font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, sans-serif;
 }
 
 main {
-width: 100%;
-max-width: 900px;
-margin: 0 auto;
+    width: 100%;
+    max-width: 900px;
 }
 
 h1 {
-font-size: clamp(2rem, 5vw, 4rem);
-font-weight: 600;
-letter-spacing: -0.04em;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
 }
 
 p {
-color: var(--muted);
-line-height: 1.6;
+    color: var(--muted);
+    line-height: 1.6;
 }`;
 
         const appFile = path.join(jsFolder, 'app.js');
