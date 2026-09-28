@@ -155,16 +155,16 @@ You are free to modify, remove, rename, or extend any generated file or director
 
 ## Author
 
-[**Fouad Salehi**](https://github.com/fouad-salehi)
+**[Fouad Salehi](https://github.com/fouad-salehi)**
 
 ## License
 
-This project is proprietary software.
-You may view and run the project for personal or evaluation purposes, subject to the terms of the [LICENSE](https://github.com/fouad-salehi/wrightForTailwind/blob/main/LICENSE) file.
-Copying, modifying, creating derivative works, incorporating the project into another project, or redistributing modified versions is not permitted.
+WRIGHT is **proprietary software**.
 
-Redistribution of the original project is permitted only with clear and visible attribution to:
+You may view and run the project for personal or evaluation purposes only. Copying, modifying, creating derivative works, incorporating the project into another project, or redistributing modified versions is **not** permitted.
 
-**Fouad Salehi / WRIGHT for Tailwind — Web Project Folder Structure for Tailwind**
+See the [LICENSE](./LICENSE) file for the complete terms.
 
-Any use beyond the permissions granted by the `LICENSE` requires prior written permission from the copyright owner.
+## Copyright
+
+Copyright © 2026 Fouad Salehi. All rights reserved.
