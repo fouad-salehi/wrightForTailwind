@@ -149,12 +149,18 @@ WRIGHT generates a starting structure rather than a complete application.
 
 You are free to modify, remove, rename, or extend any generated file or directory according to your project's requirements.
 
+## WRIGHT Ecosystem
+
+* [WRIGHT](https://github.com/fouad-salehi/wright)
+
+## Author
+
+[**Fouad Salehi**](https://github.com/fouad-salehi)
+
 ## License
 
 This project is proprietary software.
-
-You may view and run the project for personal or evaluation purposes, subject to the terms of the `LICENSE` file.
-
+You may view and run the project for personal or evaluation purposes, subject to the terms of the [LICENSE](https://github.com/fouad-salehi/wrightForTailwind/blob/main/LICENSE) file.
 Copying, modifying, creating derivative works, incorporating the project into another project, or redistributing modified versions is not permitted.
 
 Redistribution of the original project is permitted only with clear and visible attribution to:
@@ -162,13 +168,3 @@ Redistribution of the original project is permitted only with clear and visible 
 **Fouad Salehi / WRIGHT for Tailwind — Web Project Folder Structure for Tailwind**
 
 Any use beyond the permissions granted by the `LICENSE` requires prior written permission from the copyright owner.
-
-## WRIGHT Ecosystem
-
-* WRIGHT: https://github.com/fouad-salehi/wright
-* WRIGHT for Bootstrap: https://github.com/fouad-salehi/wrightForBootstrap
-* WRIGHT for Tailwind: https://github.com/fouad-salehi/wrightForTailwind
-
-## Author
-
-**Fouad Salehi**
